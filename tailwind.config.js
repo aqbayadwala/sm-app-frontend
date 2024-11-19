@@ -3,7 +3,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/preline/preline.js",
+    "./node_modules/preline/dist/*.js",
   ],
   theme: {
     extend: {},

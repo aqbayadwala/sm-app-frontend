@@ -61,13 +61,13 @@ export default function DaurList() {
 
   async function handleSubmit() {
     console.log(daurName);
-    const jwtToken = localStorage.getItem("jwt");
+    //const jwtToken = localStorage.getItem("jwt");
     try {
       const response = await fetch(`${backend}/createdaur`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${jwtToken}`,
+          //Authorization: `Bearer ${jwtToken}`,
         },
         body: JSON.stringify({ daurName: daurName }),
         credentials: "include",
@@ -95,6 +95,7 @@ export default function DaurList() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       });
 
       const data = await response.json();

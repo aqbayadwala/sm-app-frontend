@@ -120,11 +120,13 @@ export default function AddnamesPage() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(finalPayload),
+          credentials: "include",
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-          const errorData = await response.json();
-          const duplicateIts = errorData.its || "";
+          const duplicateIts = data.its || "";
 
           const updatedErrors = { ...newErrors };
 
@@ -139,11 +141,7 @@ export default function AddnamesPage() {
           });
 
           setErrors(updatedErrors);
-          return;
         }
-
-        const data = await response.json();
-        console.log(data);
 
         navigate("/daurlist");
       } catch (error) {

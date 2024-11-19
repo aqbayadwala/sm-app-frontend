@@ -1,5 +1,3 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import LoginForm from "./pages/Login";
@@ -9,15 +7,19 @@ import DaurList from "./pages/DaurList";
 
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import "preline/preline";
+import "preline";
+
 import ProtectedRoute from "./components/ProtectedRoutes";
+
 function App() {
   const location = useLocation();
 
   useEffect(() => {
     // Ensure that the Preline methods are available and initialized
     if (window.HSStaticMethods && window.HSStaticMethods.autoInit) {
-      window.HSStaticMethods.autoInit();
+      setTimeout(() => {
+        window.HSStaticMethods.autoInit();
+      }, 100);
     }
   }, [location.pathname]);
   return (
