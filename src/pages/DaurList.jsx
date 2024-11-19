@@ -26,13 +26,9 @@ export default function DaurList() {
 
   async function fetchDaurs() {
     try {
-      const jwtToken = localStorage.getItem("jwt");
-      console.log(jwtToken);
+      //const jwtToken = localStorage.getItem("jwt");
       const response = await fetch(`${backend}/fetchdaurs`, {
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
         credentials: "include",
       });
       if (!response.ok) {
@@ -65,11 +61,14 @@ export default function DaurList() {
 
   async function handleSubmit() {
     console.log(daurName);
-
+    const jwtToken = localStorage.getItem("jwt");
     try {
       const response = await fetch(`${backend}/createdaur`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        },
         body: JSON.stringify({ daurName: daurName }),
         credentials: "include",
       });

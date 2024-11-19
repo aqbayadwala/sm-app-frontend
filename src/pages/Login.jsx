@@ -62,10 +62,10 @@ export default function LoginForm() {
           credentials: "include",
         });
 
-        const data = await response.json();
-        console.log(data.access_token);
-        localStorage.setItem("jwt", data.access_token);
-
+        //const data = await response.json();
+        //console.log(data.access_token);
+        //localStorage.setItem("jwt", data.access_token);
+        console.log(response.status);
         if (response.ok) {
           navigate("/daurlist");
         } else {
