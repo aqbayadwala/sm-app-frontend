@@ -10,9 +10,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function AddnamesPage() {
   const location = useLocation();
   const { daurId } = location.state || {};
-
+  const [rows, setRows] = useState([
+    { id: Date.now(), name: "", its: "", grade: "" },
+  ]);
+  const [errors, setErrors] = useState({});
+  const [itsValues, setItsValues] = useState([]);
   const navigate = useNavigate();
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  // Logic to navigate to Daur list if entered url for add names
   useEffect(() => {
     if (!daurId) {
       navigate("/daurlist");
@@ -21,18 +27,46 @@ export default function AddnamesPage() {
 
   if (!daurId) return null;
 
-  const [rows, setRows] = useState([
-    { id: Date.now(), name: "", its: "", grade: "" },
-  ]);
-  const [errors, setErrors] = useState({});
+  // Logic for adding prefilled student names when clicked on edit daur
+  useEffect(() => {
+    async function fetchDaurData() {
+      try {
+        const response = await fetch(`${backendUrl}/getstudents/${daurId}`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          //console.log(data.students);
+          const fetchedRows =
+            data.students && data.students.length > 0
+              ? data.students
+              : [{ id: Date.now(), name: "", its: "", grade: "" }];
+          setRows(fetchedRows);
+          const fetchedItsValues = fetchedRows.map((row) => row.its);
+          setItsValues(fetchedItsValues);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (daurId) {
+      fetchDaurData();
+    }
+  }, [daurId, backendUrl]);
+
   // Logic to add rows of input boxes
 
   function handleAdd() {
     setRows([...rows, { id: Date.now(), name: "", its: "", grade: "" }]);
+    //console.log("addrows", rows);
   }
 
   function handleDelete(id) {
     setRows(() => rows.filter((row) => row.id !== id));
+    //console.log("deleterows", rows);
   }
 
   // Logic to fetch data from InputBox components (controlled components)
@@ -49,6 +83,14 @@ export default function AddnamesPage() {
             ...prevErrors,
             [id]: rowErrors,
           }));
+
+          setItsValues((previousItsValues) => {
+            const updatedItsValues = previousItsValues.filter(
+              (its) => its != row.its,
+            );
+            updatedItsValues.push(updatedRow.its);
+            return updatedItsValues;
+          });
 
           return updatedRow;
         }
@@ -69,16 +111,16 @@ export default function AddnamesPage() {
   async function handleSubmit() {
     const newErrors = {};
     let hasErrors = false;
+    const itsValues = [];
 
     if (rows.length === 0) {
       newErrors.error = "rows empty";
       hasErrors = true;
     }
 
-    const itsValues = [];
-
     rows.forEach((row) => {
       const rowErrors = {};
+
       if (!row.name) {
         rowErrors.name = "Name is a required field";
         hasErrors = true;
@@ -90,11 +132,12 @@ export default function AddnamesPage() {
       } else if (isNaN(Number(row.its))) {
         rowErrors.its = "ITS should be a number";
         hasErrors = true;
-      } else if (itsValues.includes(row.its)) {
+      } else if (itsValues.includes(Number(row.its))) {
         rowErrors.its = "ITS value must be unique";
         hasErrors = true;
       } else {
-        itsValues.push(row.its);
+        itsValues.push(Number(row.its));
+        //console.log(itsValues);
       }
 
       if (!row.grade) {
@@ -109,12 +152,11 @@ export default function AddnamesPage() {
 
     if (hasErrors) {
       setErrors(newErrors);
-      console.log(newErrors);
+      //console.log(newErrors);
     } else {
-      console.log(rows);
+      //console.log(rows);
       try {
-        const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        console.log(daurId);
+        //console.log(daurId);
         const finalPayload = [{ daurId: daurId }, rows];
         const response = await fetch(`${backendUrl}/addstudents`, {
           method: "POST",
@@ -123,11 +165,10 @@ export default function AddnamesPage() {
           credentials: "include",
         });
 
-        const data = await response.json();
+        //const data = await response.json();
 
-        if (!response.ok) {
+        /*if (!response.ok) {
           const duplicateIts = data.its || "";
-
           const updatedErrors = { ...newErrors };
 
           rows.forEach((row) => {
@@ -141,7 +182,8 @@ export default function AddnamesPage() {
           });
 
           setErrors(updatedErrors);
-        }
+          //throw new Error(data.error);
+        }*/
 
         navigate("/daurlist");
       } catch (error) {

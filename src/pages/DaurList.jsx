@@ -106,6 +106,25 @@ export default function DaurList() {
     }
   }
 
+  async function editDaur(id) {
+    try {
+      const response = await fetch(`${backend}/getstudents/${id}`, {
+        method: "GET",
+        credentials: "include",
+      });
+      const data = await response.json();
+      console.log("edit daur data", data);
+
+      if (response.ok) {
+        navigate("/addnames", {
+          state: { daurId: id },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
       {/* Create daur modal component with header*/}
@@ -204,6 +223,7 @@ export default function DaurList() {
               key={daur.id}
               daurName={daur.name}
               onClickDelete={deleteDaurCard}
+              onClickEdit={editDaur}
               id={daur.id}
             />
           ))
