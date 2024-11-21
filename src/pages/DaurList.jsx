@@ -105,6 +105,30 @@ export default function DaurList() {
       console.error(error);
     }
   }
+  // Function to handle daur name change
+  // TODO: It will need an input box rendered to edit daur name
+  //       It will need a fetch call to send daur name to the server
+  //       It will need a backend route to update daur name on the server
+  async function handleDaurNameChange(id, newName) {
+    try {
+      const response = await fetch(`${backend}/updatedaurname/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ daurName: newName }),
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        setDaurs((prevDaurs) => {
+          return prevDaurs.map((daur) =>
+            daur.id === id ? { ...daur, name: newName } : daur,
+          );
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   async function editDaur(id) {
     try {
@@ -222,6 +246,7 @@ export default function DaurList() {
             <ClassCard
               key={daur.id}
               daurName={daur.name}
+              onClickDaurName={handleDaurNameChange}
               onClickDelete={deleteDaurCard}
               onClickEdit={editDaur}
               id={daur.id}
