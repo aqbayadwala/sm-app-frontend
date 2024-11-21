@@ -100,15 +100,14 @@ export default function DaurList() {
 
       const data = await response.json();
       console.log(data);
-      setDaurs(() => fetchDaurs());
+      //setDaurs(() => fetchDaurs());
+      setDaurs((prevDaurs) => prevDaurs.filter((daur) => daur.id != id));
     } catch (error) {
       console.error(error);
     }
   }
+
   // Function to handle daur name change
-  // TODO: It will need an input box rendered to edit daur name
-  //       It will need a fetch call to send daur name to the server
-  //       It will need a backend route to update daur name on the server
   async function handleDaurNameChange(id, newName) {
     try {
       const response = await fetch(`${backend}/updatedaurname/${id}`, {
