@@ -73,7 +73,7 @@ export default function SignUp() {
           body: JSON.stringify(formData),
         });
         const data = await response.json();
-
+        console.log(backend);
         if (!response.ok) {
           // Log both status code and message
           const error = data.error || "";
