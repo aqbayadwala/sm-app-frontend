@@ -24,14 +24,17 @@ export default function ProtectedRoute() {
           credentials: "include",
         });
 
+        const data = await response.json();
+
         if (response.ok) {
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);
+          console.log("its an error", data.error);
         }
       } catch (error) {
         setIsAuthenticated(false);
-        console.log("its an error");
+        //console.log("its an error");
       }
     }
     checkAuth();
