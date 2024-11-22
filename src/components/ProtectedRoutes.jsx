@@ -21,6 +21,7 @@ export default function ProtectedRoute() {
       try {
         const response = await fetch(`${backend}/auth-check`, {
           method: "GET",
+          headers: { "Content-type": "application/json" },
           credentials: "include",
         });
 
