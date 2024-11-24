@@ -165,8 +165,11 @@ export default function AddnamesPage() {
         const finalPayload = [{ daurId: daurId }, rows];
         const response = await fetch(`${backendUrl}/addstudents`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          Authorizaton: `Bearer ${jwtToken}`,
+          headers: {
+            "Content-Type": "application/json",
+            Authorizaton: `Bearer ${jwtToken}`,
+          },
+
           body: JSON.stringify(finalPayload),
           //credentials: "include",
         });
