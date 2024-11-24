@@ -167,7 +167,7 @@ export default function AddnamesPage() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorizaton: `Bearer ${jwtToken}`,
+            Authorization: `Bearer ${jwtToken}`,
           },
 
           body: JSON.stringify(finalPayload),
