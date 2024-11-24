@@ -18,11 +18,11 @@ export default function DaurList() {
     setDaurName(e.target.value);
   }
 
-  function handletransition() {
-    if (isRequestSuccessful) {
-      navigate("/addnames", { state: { daurId: daurId } });
-    }
-  }
+  /*  function handletransition() {
+      if (isRequestSuccessful) {
+        navigate("/addnames", { state: { daurId: daurId } });
+      }
+    } */
 
   async function fetchDaurs() {
     try {
@@ -46,18 +46,18 @@ export default function DaurList() {
     fetchDaurs();
   }, []);
 
-  useEffect(() => {
-    //console.log(daurId);
-    const modal = modalRef.current;
-    if (modal) {
-      modal.addEventListener("transitionend", handletransition);
-    }
-    return () => {
+  /*  useEffect(() => {
+      //console.log(daurId);
+      const modal = modalRef.current;
       if (modal) {
-        modal.removeEventListener("transitionend", handletransition);
+        modal.addEventListener("transitionend", handletransition);
       }
-    };
-  }, [isRequestSuccessful, daurId]);
+      return () => {
+        if (modal) {
+          modal.removeEventListener("transitionend", handletransition);
+        }
+      };
+    }, [isRequestSuccessful, daurId]); */
 
   async function handleSubmit() {
     console.log(daurName);
@@ -79,7 +79,8 @@ export default function DaurList() {
       if (response.status === 200) {
         console.log(id);
         setDaurId(id);
-        setIsRequestSuccessful(true);
+        //       setIsRequestSuccessful(true);
+        navigate("/addnames", { state: { daurId: daurId } });
       } else {
         setIsRequestSuccessful(false);
       }
