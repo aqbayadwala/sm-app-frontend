@@ -14,6 +14,7 @@ export default function DaurList() {
   const modalRef = useRef(null);
   const backend = import.meta.env.VITE_BACKEND_URL;
 
+  const jwtToken = localStorage.getItem("jwt");
   function handleInputChange(e) {
     setDaurName(e.target.value);
   }
@@ -26,10 +27,10 @@ export default function DaurList() {
 
   async function fetchDaurs() {
     try {
-      //const jwtToken = localStorage.getItem("jwt");
       const response = await fetch(`${backend}/fetchdaurs`, {
         method: "GET",
-        credentials: "include",
+        Authorization: `Bearer ${jwtToken}`,
+        //credentials: "include",
       });
       if (!response.ok) {
         throw new Error(response.status);
@@ -67,10 +68,10 @@ export default function DaurList() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          //Authorization: `Bearer ${jwtToken}`,
+          Authorization: `Bearer ${jwtToken}`,
         },
         body: JSON.stringify({ daurName: daurName }),
-        credentials: "include",
+        //credentials: "include",
       });
 
       const data = await response.json();
@@ -95,14 +96,15 @@ export default function DaurList() {
     try {
       const response = await fetch(`${backend}/deletedaur/${id}`, {
         method: "DELETE",
+        Authorization: `Bearer ${jwtToken}`,
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
+        //credentials: "include",
       });
 
       const data = await response.json();
-      if (!respone.ok) {
+      if (!response.ok) {
         console.log(data);
       }
       //setDaurs(() => fetchDaurs());
@@ -125,8 +127,9 @@ export default function DaurList() {
       const response = await fetch(`${backend}/updatedaurname/${id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        Authorization: `Bearer ${jwtToken}`,
         body: JSON.stringify({ daurName: newName }),
-        credentials: "include",
+        //credentials: "include",
       });
 
       if (!response.ok) {
@@ -150,7 +153,9 @@ export default function DaurList() {
     try {
       const response = await fetch(`${backend}/getstudents/${id}`, {
         method: "GET",
-        credentials: "include",
+        Authorization: `Bearer ${jwtToken}`,
+
+        //credentials: "include",
       });
       const data = await response.json();
       console.log("edit daur data", data);

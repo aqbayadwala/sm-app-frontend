@@ -47,7 +47,6 @@ export default function LoginForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
     if (validateForm()) {
       // console.log("Form data: ", formData);
       setErrors({});
@@ -59,12 +58,12 @@ export default function LoginForm() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
-          credentials: "include",
+          //credentials: "include",
         });
 
-        //const data = await response.json();
+        const data = await response.json();
         //console.log(data.access_token);
-        //localStorage.setItem("jwt", data.access_token);
+        localStorage.setItem("jwt", data.access_token);
         console.log(response.status);
         if (response.ok) {
           navigate("/daurlist");
