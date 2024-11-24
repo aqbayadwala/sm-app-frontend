@@ -34,7 +34,9 @@ export default function AddnamesPage() {
       try {
         const response = await fetch(`${backendUrl}/getstudents/${daurId}`, {
           method: "GET",
-          Authorizaton: `Bearer ${jwtToken}`,
+          header: {
+            Authorizaton: `Bearer ${jwtToken}`,
+          },
           //credentials: "include",
         });
 

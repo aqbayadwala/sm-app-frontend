@@ -29,7 +29,7 @@ export default function DaurList() {
     try {
       const response = await fetch(`${backend}/fetchdaurs`, {
         method: "GET",
-        Authorization: `Bearer ${jwtToken}`,
+        headers: { Authorization: `Bearer ${jwtToken}` },
         //credentials: "include",
       });
       if (!response.ok) {
@@ -96,9 +96,9 @@ export default function DaurList() {
     try {
       const response = await fetch(`${backend}/deletedaur/${id}`, {
         method: "DELETE",
-        Authorization: `Bearer ${jwtToken}`,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
         },
         //credentials: "include",
       });
@@ -126,8 +126,10 @@ export default function DaurList() {
     try {
       const response = await fetch(`${backend}/updatedaurname/${id}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        Authorization: `Bearer ${jwtToken}`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        },
         body: JSON.stringify({ daurName: newName }),
         //credentials: "include",
       });
@@ -153,7 +155,9 @@ export default function DaurList() {
     try {
       const response = await fetch(`${backend}/getstudents/${id}`, {
         method: "GET",
-        Authorization: `Bearer ${jwtToken}`,
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
 
         //credentials: "include",
       });
