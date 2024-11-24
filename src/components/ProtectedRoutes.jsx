@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Navigate, Outlet } from "react-router-dom";
 
-/*export default function ProtectedRoute() {
+export default function ProtectedRoute() {
   const jwt = localStorage.getItem("jwt");
 
   if (!jwt) {
@@ -10,9 +10,9 @@ import { Navigate, Outlet } from "react-router-dom";
   }
 
   return <Outlet />;
-}*/
+}
 
-export default function ProtectedRoute() {
+/*export default function ProtectedRoute() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const backend = import.meta.env.VITE_BACKEND_URL;
 
@@ -50,4 +50,4 @@ export default function ProtectedRoute() {
   }
 
   return <Outlet />;
-}
+}*/

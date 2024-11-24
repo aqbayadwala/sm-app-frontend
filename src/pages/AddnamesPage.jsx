@@ -17,6 +17,7 @@ export default function AddnamesPage() {
   const [itsValues, setItsValues] = useState([]);
   const navigate = useNavigate();
 
+  const jwtToken = localStorage.getItem("jwt");
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   // Logic to navigate to Daur list if entered url for add names
   useEffect(() => {
@@ -33,7 +34,8 @@ export default function AddnamesPage() {
       try {
         const response = await fetch(`${backendUrl}/getstudents/${daurId}`, {
           method: "GET",
-          credentials: "include",
+          Authorizaton: `Bearer ${jwtToken}`,
+          //credentials: "include",
         });
 
         if (response.ok) {
@@ -161,8 +163,9 @@ export default function AddnamesPage() {
         const response = await fetch(`${backendUrl}/addstudents`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          Authorizaton: `Bearer ${jwtToken}`,
           body: JSON.stringify(finalPayload),
-          credentials: "include",
+          //credentials: "include",
         });
 
         //const data = await response.json();
