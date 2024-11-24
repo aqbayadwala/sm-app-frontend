@@ -7,7 +7,7 @@ import DaurList from "./pages/DaurList";
 
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import "preline";
+import "preline/preline";
 
 import ProtectedRoute from "./components/ProtectedRoutes";
 
