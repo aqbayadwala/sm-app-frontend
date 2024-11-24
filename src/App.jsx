@@ -19,7 +19,7 @@ function App() {
     if (window.HSStaticMethods && window.HSStaticMethods.autoInit) {
       setTimeout(() => {
         window.HSStaticMethods.autoInit();
-      }, 300);
+      }, 800);
     }
   }, [location.pathname]);
   return (
