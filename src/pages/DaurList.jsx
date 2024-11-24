@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function DaurList() {
   const [daurName, setDaurName] = useState("");
-  const [isRequestSuccessful, setIsRequestSuccessful] = useState(false);
-  const [daurId, setDaurId] = useState(0);
+  //const [isRequestSuccessful, setIsRequestSuccessful] = useState(false);
+  //const [daurId, setDaurId] = useState(0);
   const [daurs, setDaurs] = useState([]);
   const navigate = useNavigate();
   const modalRef = useRef(null);
@@ -78,9 +78,9 @@ export default function DaurList() {
 
       if (response.status === 200) {
         console.log(id);
-        setDaurId(id);
+        //        setDaurId(id);
         //       setIsRequestSuccessful(true);
-        navigate("/addnames", { state: { daurId: daurId } });
+        navigate("/addnames", { state: { daurId: data.daurId } });
       } else {
         setIsRequestSuccessful(false);
       }
