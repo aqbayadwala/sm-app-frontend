@@ -102,7 +102,7 @@ export default function DaurList() {
       });
 
       const data = await response.json();
-      if (!respone.ok) {
+      if (!response.ok) {
         console.log(data);
       }
       //setDaurs(() => fetchDaurs());
