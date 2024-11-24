@@ -90,6 +90,7 @@ export default function DaurList() {
   }
 
   async function deleteDaurCard(id) {
+    const previousDaurs = daurs;
     setDaurs((prevDaurs) => prevDaurs.filter((daur) => daur.id != id));
     try {
       const response = await fetch(`${backend}/deletedaur/${id}`, {
@@ -101,12 +102,13 @@ export default function DaurList() {
       });
 
       const data = await response.json();
-      if (!response.ok) {
+      if (!respone.ok) {
         console.log(data);
       }
       //setDaurs(() => fetchDaurs());
     } catch (error) {
       console.error(error);
+      setDaurs(previousDaurs);
     }
   }
 
