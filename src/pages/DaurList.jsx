@@ -27,6 +27,7 @@ export default function DaurList() {
 
   async function fetchDaurs() {
     try {
+      console.log("daurlist-fetchdaur", jwtToken);
       const response = await fetch(`${backend}/fetchdaurs`, {
         method: "GET",
         headers: { Authorization: `Bearer ${jwtToken}` },

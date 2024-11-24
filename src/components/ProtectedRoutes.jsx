@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 export default function ProtectedRoute() {
   const jwt = localStorage.getItem("jwt");
-  console.log(jwt);
+  //console.log(jwt);
   if (!jwt) {
     return <Navigate to="/" />;
   }
