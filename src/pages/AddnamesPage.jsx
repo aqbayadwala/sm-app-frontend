@@ -36,6 +36,7 @@ export default function AddnamesPage() {
           method: "GET",
           header: {
             Authorizaton: `Bearer ${jwtToken}`,
+            "Content-Type": "application/json",
           },
           //credentials: "include",
         });
