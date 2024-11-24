@@ -110,152 +110,166 @@ export default function DaurList() {
 
   // Function to handle daur name change
   async function handleDaurNameChange(id, newName) {
-    try {
-      const response = await fetch(`${backend}/updatedaurname/${id}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ daurName: newName }),
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        setDaurs((prevDaurs) => {
-          return prevDaurs.map((daur) =>
-            daur.id === id ? { ...daur, name: newName } : daur,
-          );
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    // First update the UI immediately
+    setDaurs((prevDaurs) => {
+      return prevDaurs.map((daur) =>
+        daur.id === id ? { ...daur, name: newName } : daur,
+      );
+    });
   }
 
-  async function editDaur(id) {
-    try {
-      const response = await fetch(`${backend}/getstudents/${id}`, {
-        method: "GET",
-        credentials: "include",
+  try {
+    const response = await fetch(`${backend}/updatedaurname/${id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ daurName: newName }),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      setDaurs((prevDaurs) => {
+        return prevDaurs.map((daur) =>
+          daur.id === id ? { ...daur, name: daur.name } : daur,
+        );
       });
-      const data = await response.json();
-      console.log("edit daur data", data);
-
-      if (response.ok) {
-        navigate("/addnames", {
-          state: { daurId: id },
-        });
-      }
-    } catch (error) {
-      console.log(error);
     }
+  } catch (error) {
+    console.error(error);
+    setDaurs((prevDaurs) => {
+      return prevDaurs.map((daur) =>
+        daur.id === id ? { ...daur, name: daur.name } : daur,
+      );
+    });
+
   }
+}
 
-  return (
-    <>
-      {/* Create daur modal component with header*/}
-      <nav className="flex sticky top-0 justify-between pt-4 pb-4 border-b-2 border-slate-300 bg-gray-200 z-10">
-        <h1 className="font-serif ml-5 text-4xl">Daur conducter</h1>
-        <button
-          type="button"
-          className="mr-4 px-3 py-3 items-end text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-          aria-haspopup="dialog"
-          aria-expanded="false"
-          aria-controls="hs-scale-animation-modal"
-          data-hs-overlay="#hs-scale-animation-modal"
-        >
-          Create Daur
-        </button>
-      </nav>
+async function editDaur(id) {
+  try {
+    const response = await fetch(`${backend}/getstudents/${id}`, {
+      method: "GET",
+      credentials: "include",
+    });
+    const data = await response.json();
+    console.log("edit daur data", data);
 
-      <div
-        id="hs-scale-animation-modal"
-        className="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none"
-        role="dialog"
-        tabIndex={-1}
-        ref={modalRef}
-        aria-labelledby="hs-scale-animation-modal-label"
+    if (response.ok) {
+      navigate("/addnames", {
+        state: { daurId: id },
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+return (
+  <>
+    {/* Create daur modal component with header*/}
+    <nav className="flex sticky top-0 justify-between pt-4 pb-4 border-b-2 border-slate-300 bg-gray-200 z-10">
+      <h1 className="font-serif ml-5 text-4xl">Daur conducter</h1>
+      <button
+        type="button"
+        className="mr-4 px-3 py-3 items-end text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        aria-controls="hs-scale-animation-modal"
+        data-hs-overlay="#hs-scale-animation-modal"
       >
-        <div className="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 sm:max-w-fit sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
-          <div className="w-96 h-44 flex flex-col mx-auto bg-white border shadow-sm rounded-xl pointer-events-auto">
-            <div className="flex justify-between items-center py-3 px-4 border-white">
-              <h3
-                id="hs-scale-animation-modal-label"
-                className="font-bold text-gray-800"
+        Create Daur
+      </button>
+    </nav>
+
+    <div
+      id="hs-scale-animation-modal"
+      className="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none"
+      role="dialog"
+      tabIndex={-1}
+      ref={modalRef}
+      aria-labelledby="hs-scale-animation-modal-label"
+    >
+      <div className="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 sm:max-w-fit sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
+        <div className="w-96 h-44 flex flex-col mx-auto bg-white border shadow-sm rounded-xl pointer-events-auto">
+          <div className="flex justify-between items-center py-3 px-4 border-white">
+            <h3
+              id="hs-scale-animation-modal-label"
+              className="font-bold text-gray-800"
+            >
+              Create Daur
+            </h3>
+            <button
+              type="button"
+              className="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none"
+              aria-label="Close"
+              data-hs-overlay="#hs-scale-animation-modal"
+            >
+              <span className="sr-only">Close</span>
+              <svg
+                className="shrink-0 size-4"
+                xmlns="http://www.w3.org/2000/svg"
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                Create Daur
-              </h3>
-              <button
-                type="button"
-                className="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none"
-                aria-label="Close"
-                data-hs-overlay="#hs-scale-animation-modal"
-              >
-                <span className="sr-only">Close</span>
-                <svg
-                  className="shrink-0 size-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 6 6 18" />
-                  <path d="m6 6 12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="flex h-10 gap-3">
-              <input
-                name="createdaur"
-                className="border w-full rounded border-gray-500 ml-3 mr-3 pl-2"
-                type="text"
-                placeholder="Daur Name"
-                value={daurName}
-                onChange={(e) => handleInputChange(e)}
-              />
-            </div>
-            <div className="flex justify-end items-center gap-x-2 py-3 px-4 mt-3">
-              <button
-                type="button"
-                className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                data-hs-overlay="#hs-scale-animation-modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                onClick={handleSubmit}
-                data-hs-overlay="#hs-scale-animation-modal"
-                disabled={daurName === ""}
-              >
-                Create
-              </button>
-            </div>
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+              </svg>
+            </button>
+          </div>
+          <div className="flex h-10 gap-3">
+            <input
+              name="createdaur"
+              className="border w-full rounded border-gray-500 ml-3 mr-3 pl-2"
+              type="text"
+              placeholder="Daur Name"
+              value={daurName}
+              onChange={(e) => handleInputChange(e)}
+            />
+          </div>
+          <div className="flex justify-end items-center gap-x-2 py-3 px-4 mt-3">
+            <button
+              type="button"
+              className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+              data-hs-overlay="#hs-scale-animation-modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+              onClick={handleSubmit}
+              data-hs-overlay="#hs-scale-animation-modal"
+              disabled={daurName === ""}
+            >
+              Create
+            </button>
           </div>
         </div>
       </div>
+    </div>
 
-      {/* Rendering daur cards*/}
-      <div className="flex flex-col flex-wrap md:flex-row mb-7">
-        {Array.isArray(daurs) && daurs.length > 0 ? (
-          daurs.map((daur) => (
-            <ClassCard
-              key={daur.id}
-              daurName={daur.name}
-              onClickDaurName={handleDaurNameChange}
-              onClickDelete={deleteDaurCard}
-              onClickEdit={editDaur}
-              id={daur.id}
-            />
-          ))
-        ) : (
-          <p className="mt-10 mx-auto text-2xl">No daurs available</p>
-        )}
-      </div>
-    </>
-  );
+    {/* Rendering daur cards*/}
+    <div className="flex flex-col flex-wrap md:flex-row mb-7">
+      {Array.isArray(daurs) && daurs.length > 0 ? (
+        daurs.map((daur) => (
+          <ClassCard
+            key={daur.id}
+            daurName={daur.name}
+            onClickDaurName={handleDaurNameChange}
+            onClickDelete={deleteDaurCard}
+            onClickEdit={editDaur}
+            id={daur.id}
+          />
+        ))
+      ) : (
+        <p className="mt-10 mx-auto text-2xl">No daurs available</p>
+      )}
+    </div>
+  </>
+);
 }
