@@ -7,14 +7,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function DaurList() {
   const [daurName, setDaurName] = useState("");
-  //const [isRequestSuccessful, setIsRequestSuccessful] = useState(false);
-  //const [daurId, setDaurId] = useState(0);
   const [daurs, setDaurs] = useState([]);
   const navigate = useNavigate();
   const modalRef = useRef(null);
   const backend = import.meta.env.VITE_BACKEND_URL;
-
   const jwtToken = localStorage.getItem("jwt");
+
   function handleInputChange(e) {
     setDaurName(e.target.value);
   }
@@ -27,11 +25,10 @@ export default function DaurList() {
 
   async function fetchDaurs() {
     try {
-      console.log("daurlist-fetchdaur", jwtToken);
+      //console.log("daurlist-fetchdaur", jwtToken);
       const response = await fetch(`${backend}/fetchdaurs`, {
         method: "GET",
         headers: { Authorization: `Bearer ${jwtToken}` },
-        //credentials: "include",
       });
       if (!response.ok) {
         throw new Error(response.status);
@@ -63,7 +60,6 @@ export default function DaurList() {
 
   async function handleSubmit() {
     console.log(daurName);
-    //const jwtToken = localStorage.getItem("jwt");
     try {
       const response = await fetch(`${backend}/createdaur`, {
         method: "POST",
@@ -72,7 +68,6 @@ export default function DaurList() {
           Authorization: `Bearer ${jwtToken}`,
         },
         body: JSON.stringify({ daurName: daurName }),
-        //credentials: "include",
       });
 
       const data = await response.json();
@@ -80,11 +75,7 @@ export default function DaurList() {
 
       if (response.status === 200) {
         console.log(id);
-        //        setDaurId(id);
-        //       setIsRequestSuccessful(true);
         navigate("/addnames", { state: { daurId: data.daurId } });
-      } else {
-        setIsRequestSuccessful(false);
       }
     } catch (error) {
       console.log(error);
@@ -101,14 +92,12 @@ export default function DaurList() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${jwtToken}`,
         },
-        //credentials: "include",
       });
 
       const data = await response.json();
       if (!response.ok) {
         console.log(data);
       }
-      //setDaurs(() => fetchDaurs());
     } catch (error) {
       console.error(error);
       setDaurs(previousDaurs);
@@ -132,7 +121,6 @@ export default function DaurList() {
           Authorization: `Bearer ${jwtToken}`,
         },
         body: JSON.stringify({ daurName: newName }),
-        //credentials: "include",
       });
 
       if (!response.ok) {
@@ -159,8 +147,6 @@ export default function DaurList() {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
-
-        //credentials: "include",
       });
       const data = await response.json();
       console.log("edit daur data", data);
