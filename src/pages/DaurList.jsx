@@ -161,6 +161,10 @@ export default function DaurList() {
     }
   }
 
+  function handleClickStart(id) {
+    navigate("/startdaur", { state: { daurId: id } });
+  }
+
   return (
     <>
       {/* Create daur modal component with header*/}
@@ -261,6 +265,7 @@ export default function DaurList() {
               onClickDaurName={handleDaurNameChange}
               onClickDelete={deleteDaurCard}
               onClickEdit={editDaur}
+              onClickStart={handleClickStart}
               id={daur.id}
             />
           ))

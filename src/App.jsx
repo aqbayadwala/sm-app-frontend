@@ -4,12 +4,12 @@ import LoginForm from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import AddnamesPage from "./pages/AddnamesPage";
 import DaurList from "./pages/DaurList";
+import ProtectedRoute from "./components/ProtectedRoutes";
+import StartDaur from "./pages/StartDaur";
 
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "preline/preline";
-
-import ProtectedRoute from "./components/ProtectedRoutes";
 
 function App() {
   const location = useLocation();
@@ -31,6 +31,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="addnames" element={<AddnamesPage />} />
             <Route path="daurlist" element={<DaurList />} />
+            <Route path="startdaur" element={<StartDaur />} />
           </Route>
         </Routes>
       </div>
