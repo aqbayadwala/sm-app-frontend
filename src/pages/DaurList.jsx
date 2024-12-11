@@ -180,7 +180,7 @@ export default function DaurList() {
     <>
       {/* Create daur modal component with header*/}
       <nav className="flex sticky top-0 justify-between pt-4 pb-4 border-b-2 border-slate-300 bg-gray-200 z-10">
-        <h1 className="font-serif ml-5 text-3xl">Daur conducter</h1>
+        <h1 className="font-serif ml-5 pt-1 text-3xl">Daur conducter</h1>
         <button
           type="button"
           className="mr-4 px-3 py-3 items-end text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
