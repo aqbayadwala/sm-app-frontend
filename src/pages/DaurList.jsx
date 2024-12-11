@@ -267,7 +267,7 @@ export default function DaurList() {
       </div>
 
       {/* Rendering daur cards*/}
-      <div className="flex flex-col w-full md:flex-row mb-7">
+      <div className="flex flex-col flex-wrap w-full md:flex-row mb-7">
         {Array.isArray(daurs) && daurs.length > 0 ? (
           daurs.map((daur) => (
             <ClassCard
