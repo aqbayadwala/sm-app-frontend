@@ -12,16 +12,18 @@ export default function DaurList() {
   const modalRef = useRef(null);
   const backend = import.meta.env.VITE_BACKEND_URL;
   const jwtToken = localStorage.getItem("jwt");
+  const [daurId, setDaurId] = useState(0);
+  const [isRequestSuccessful, setIsRequestSuccessful] = useState(false);
 
   function handleInputChange(e) {
     setDaurName(e.target.value);
   }
 
-  /*  function handletransition() {
-      if (isRequestSuccessful) {
-        navigate("/addnames", { state: { daurId: daurId } });
-      }
-    } */
+  function handletransition() {
+    if (isRequestSuccessful) {
+      navigate("/addnames", { state: { daurId: daurId } });
+    }
+  }
 
   async function fetchDaurs() {
     try {
@@ -42,11 +44,8 @@ export default function DaurList() {
   }
 
   useEffect(() => {
-    fetchDaurs();
-  }, []);
-
-  /*  useEffect(() => {
-      //console.log(daurId);
+    if (import.meta.env.VITE_APP_ENV === "development") {
+      console.log("development");
       const modal = modalRef.current;
       if (modal) {
         modal.addEventListener("transitionend", handletransition);
@@ -56,9 +55,14 @@ export default function DaurList() {
           modal.removeEventListener("transitionend", handletransition);
         }
       };
-    }, [isRequestSuccessful, daurId]); */
+    }
+  }, [isRequestSuccessful, daurId]);
 
-  async function handleSubmit() {
+  useEffect(() => {
+    fetchDaurs();
+  }, []);
+
+  async function createDaur() {
     console.log(daurName);
     try {
       const response = await fetch(`${backend}/createdaur`, {
@@ -75,7 +79,14 @@ export default function DaurList() {
 
       if (response.status === 200) {
         console.log(id);
-        navigate("/addnames", { state: { daurId: data.daurId } });
+        if (import.meta.env.vite_app_env === "development") {
+          setDaurId(id);
+          setIsRequestSuccessful(true);
+        }
+      }
+
+      if (import.meta.env.vite_app_env === "production") {
+        navigate("/addnames", { state: { daurid: data.daurid } });
       }
     } catch (error) {
       console.log(error);
@@ -152,9 +163,7 @@ export default function DaurList() {
       console.log("edit daur data", data);
 
       if (response.ok) {
-        navigate("/addnames", {
-          state: { daurId: id },
-        });
+        navigate("/addnames", { state: { daurId: id } });
       }
     } catch (error) {
       console.log(error);
@@ -244,7 +253,7 @@ export default function DaurList() {
               <button
                 type="button"
                 className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                onClick={handleSubmit}
+                onClick={createDaur}
                 data-hs-overlay="#hs-scale-animation-modal"
                 disabled={daurName === ""}
               >
