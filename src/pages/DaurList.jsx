@@ -79,13 +79,14 @@ export default function DaurList() {
 
       if (response.status === 200) {
         console.log(id);
-        if (import.meta.env.vite_app_env === "development") {
+        if (import.meta.env.VITE_APP_ENV === "development") {
           setDaurId(id);
           setIsRequestSuccessful(true);
         }
       }
 
-      if (import.meta.env.vite_app_env === "production") {
+      if (import.meta.env.VITE_APP_ENV === "production") {
+        console.log("production");
         navigate("/addnames", { state: { daurid: data.daurid } });
       }
     } catch (error) {
