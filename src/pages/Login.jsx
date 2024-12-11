@@ -172,12 +172,13 @@ export default function LoginForm() {
           </div>
         </div>
         <div className="flex justify-center">
+          Please give your valuable&nbsp;
           <a
             href="https://forms.gle/VD6XhRcwLtf8EGCo7"
-            className="hover:text-blue-600"
+            className="text-blue-600 underline hover:text-blue-600"
             target="blank"
           >
-            Please give your valuable feedback
+            feedback
           </a>
         </div>
       </div>
