@@ -88,7 +88,7 @@ export default function DaurList() {
       console.log("Environment:", import.meta.env.VITE_APP_ENV);
       if (import.meta.env.VITE_APP_ENV === "production") {
         console.log("production");
-        navigate("/addnames", { state: { daurid: id } });
+        navigate("/addnames", { state: { daurId: id } });
       }
     } catch (error) {
       console.log(error);
