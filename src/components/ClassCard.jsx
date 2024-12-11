@@ -24,7 +24,7 @@ export default function ClassCard({
   }
   return (
     <>
-      <div className="flex flex-col bg-blue-200 shadow-md rounded-lg w-96 mx-auto md:mx-10 mt-10">
+      <div className="flex flex-col bg-blue-200 shadow-md rounded-lg w-96 mx-auto md:mx-10 md:mt-10 mt-7">
         <div className="h-56 m-2.5 text-white  overflow-hidden rounded-md">
           <img src={card} alt="card-image" className="brightness-90" />
         </div>
