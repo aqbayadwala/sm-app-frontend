@@ -185,7 +185,7 @@ export default function DaurList() {
     <>
       {/* Create daur modal component with header*/}
       <nav className="flex sticky top-0 justify-between pt-4 pb-4 border-b-2 border-slate-300 bg-gray-200 z-10">
-        <h1 className="font-serif ml-3 pb-1  text-3xl">Daur conducter</h1>
+        <h1 className="font-serif ml-3 pb-1  text-2xl">Daur conducter</h1>
         <button
           type="button"
           className=" ml-auto mr-2 px-3 items-end text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
@@ -281,7 +281,7 @@ export default function DaurList() {
       {/* Rendering daur cards*/}
       {/* <div className="flex flex-col flex-wrap justify-between w-full md:flex-row mb-7">*/}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-1 mb-7">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-1 mb-7 ">
         {Array.isArray(daurs) && daurs.length > 0 ? (
           daurs.map((daur) => (
             <ClassCard
