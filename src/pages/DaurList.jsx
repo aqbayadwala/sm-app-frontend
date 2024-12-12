@@ -188,7 +188,7 @@ export default function DaurList() {
         <h1 className="font-serif ml-3 pt-1 text-3xl">Daur conducter</h1>
         <button
           type="button"
-          className="ml-1 px-3 items-end text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+          className="ml-auto mr-3 px-3 items-end text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
           aria-haspopup="dialog"
           aria-expanded="false"
           aria-controls="hs-scale-animation-modal"
