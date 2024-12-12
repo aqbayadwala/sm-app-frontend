@@ -1,15 +1,39 @@
-import React, { useEffect, useState } from "react";
-
 import { Navigate, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function ProtectedRoute() {
   const jwt = localStorage.getItem("jwt");
+  const backend = import.meta.env.VITE_BACKEND_URL;
   //console.log(jwt);
-  if (!jwt) {
-    return <Navigate to="/" />;
+  const [isAuthorized, setIsAuthorized] = useState(null);
+
+  useEffect(() => {
+    if (!jwt) {
+      setIsAuthorized(false);
+    }
+
+    async function checkAuth() {
+      try {
+        console.log("i am here");
+        const response = await fetch(`${backend}/auth-check`, {
+          method: "GET",
+          headers: { Authorization: `Bearer ${jwt}` },
+        });
+
+        setIsAuthorized(response.ok);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    checkAuth();
+  }, [jwt, backend]);
+
+  if (isAuthorized === null) {
+    return <div>Loading...</div>;
   }
 
-  return <Outlet />;
+  return isAuthorized ? <Outlet /> : <Navigate to="/" />;
 }
 
 /*export default function ProtectedRoute() {
