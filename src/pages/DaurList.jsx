@@ -181,6 +181,7 @@ export default function DaurList() {
       const response = await fetch(`${backend}/logout`, {
         method: "POST",
         headers: {
+          "Content-Type": "application/json"
           Authorization: `Bearer ${jwtToken}`,
         },
       });
