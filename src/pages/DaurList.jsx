@@ -178,7 +178,7 @@ export default function DaurList() {
 
   async function logout() {
     try {
-      const response = await fetch(`${backend}/logout`, {
+      const response = await fetch(`${backend}/logout1`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
