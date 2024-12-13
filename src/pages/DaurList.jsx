@@ -179,7 +179,7 @@ export default function DaurList() {
   async function logout() {
     try {
       const response = await fetch(`${backend}/logout`, {
-        method: "DELETE",
+        method: "POST",
         headers: {
           Authorization: `Bearer ${jwtToken}`,
         },
