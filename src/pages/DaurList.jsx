@@ -176,9 +176,22 @@ export default function DaurList() {
     navigate("/startdaur", { state: { daurId: id } });
   }
 
-  function logout() {
-    localStorage.removeItem("jwt");
-    navigate("/");
+  async function logout() {
+    try {
+      const response = await fetch(`${backend}/logout`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      });
+
+      if (response.ok) {
+        localStorage.removeItem("jwt");
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
