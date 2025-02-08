@@ -135,7 +135,7 @@ export default function DaurList() {
         },
         body: JSON.stringify({ daurName: newName }),
       });
-
+      console.log("I reached here");
       if (!response.ok) {
         setDaurs((prevDaurs) => {
           return prevDaurs.map((daur) =>
